@@ -18,26 +18,22 @@ public:
 
 	void setColor(ofColor c) { color.set(c); }
 	void setColor(int r, int g, int b, int al = 255) { color.set(r, g, b, al); }
-	void setEdgeColor(ofColor c) { edgeColor.set(c); }
-	void setEdgeColor(int r, int g, int b, int al = 255) { edgeColor.set(r, g, b, al); }
 	void setHoverColor(int r, int g, int b, int al = 255) { hoverColor.set(r, g, b, al); }
 	void setHoverColor(ofColor c) { hoverColor.set(c); }
 	void setTextColor(int r, int g, int b, int al = 255) { textColor.set(r, g, b, al); }
 	void setTextColor(ofColor c) { textColor.set(c); }
 	void setPosition(ofPoint p) { setPosition(p.x, p.y); }
-	void setPosition(int x, int y) { button.x = x; button.y = y; }
-	void setWidth(float width) { button.width = width; }
-	void setHeight(float height) { button.height = height; }
+	void setPosition(int x, int y) { _x = x; _y = y; }
+	void setWidth(float width) { _w = width; }
+	void setHeight(float height) { _h = height; }
 	void setClickable(bool state) { clickable = state; }
 	void setID(int newId) { ID = newId; }
-	void setTitle(string newTitle) { title = newTitle; if (_autoSize) button.width = 0; }
+	void setTitle(string newTitle) { title = newTitle; if (_autoSize) _w = 0; }
 	void setVisible(bool state) { visible = state; }
 	void setToggleMode(bool mode) { togglable = mode; }
 	void setToggle(bool mode) { toggle = mode; }
 	void setButtonStyle(UI_Button_Style style) { buttonStyle = style; }
 	void setRadius(float r) { _r = r; }
-	void setDoesDrawEdge(bool state) { hasEdge = state; }
-	void setEdgeWidth(float width) { edgeWidth = width; }
 
 	void buttonAutoSizes(bool state) { _autoSize = state; }
 
@@ -45,9 +41,7 @@ public:
 	string getTitle() { return title; }
 	bool getVisible() { return visible; }
 	bool getToggleMode() { return togglable; }
-	ofPoint getPosition() { return ofPoint(button.x, button.y); }
-	bool getIsHovering() { return hovering; }
-	ofRectangle getBoundingRect() { return button; }
+	ofPoint getPosition() { return ofPoint(_x, _y); }
 
 	void mouseMoved(ofMouseEventArgs & args);
 	void mouseDragged(ofMouseEventArgs & args) {}
@@ -59,9 +53,9 @@ public:
 
 	ofEvent<const pair<bool, int> > buttonEvent;
 
-	void draw(int x, int y, int w, int h, ofColor textCol = ofColor::black) { button.x = x; button.y = y; button.width = w; button.height = h; draw(); }
-	void draw(int x, int y) { button.x = x; button.y = y; draw(); }
-	void draw(ofPoint p) { button.x = p.x; button.y = p.y; draw(); }
+	void draw(int x, int y, int w, int h, ofColor textCol = ofColor::black) { _x = x; _y = y; _w = w; _h = h; draw(); }
+	void draw(int x, int y) { _x = x; _y = y; draw(); }
+	void draw(ofPoint p) { _x = p.x; _y = p.y; draw(); }
 	void draw();
 
 	/// Change the font used to draw the text
@@ -69,16 +63,16 @@ public:
 	ofxUIUtils::FontRenderer * getFontRenderer();
 
 
-protected:
-	ofxUIUtils::FontRenderer * fontRef;
+private:
+	ofxUIUtils::FontRenderer* fontRef;
 
 	UI_Button_Style buttonStyle;
 
-	ofRectangle button;
-	float  _r, edgeWidth;
+	int _x, _y;
+	float _w, _h, _r, dist;
 
-	bool visible, hovering, togglable, toggle, clickable, hasEdge, _autoSize;
-	ofColor color, hoverColor, textColor, edgeColor;
+	bool visible, hovering, togglable, toggle, clickable, _autoSize;
+	ofColor color, hoverColor, textColor;
 
 	int ID;
 	string title;
