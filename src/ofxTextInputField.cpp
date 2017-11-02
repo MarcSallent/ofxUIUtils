@@ -218,7 +218,7 @@ void ofxTextInputField::draw() {
 				int cursorBottom = cursorTop + lineHeight;
 
 				ofSetLineWidth(1.0f);
-				ofLine(cursorPos, cursorTop, cursorPos, cursorBottom);
+				ofLine(cursorPos + 5, cursorTop + 40, cursorPos + 5, cursorBottom + 10);
 			}
 			ofPopStyle();
 		}
