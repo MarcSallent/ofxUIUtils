@@ -51,7 +51,7 @@ public:
 	void		clear();
 
 	bool		isMultiline() { return multiline; }
-	void		setMultiline(bool state) { multiline = state; }
+	void		setMultiline(bool state) { multiline = state; setDrawCursor(!state); }
 
 	bool		doesDrawCursor() { return drawCursor; }
 	void		setDrawCursor(bool state) { drawCursor = state; }

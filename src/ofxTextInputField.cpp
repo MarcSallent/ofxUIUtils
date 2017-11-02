@@ -228,7 +228,54 @@ void ofxTextInputField::draw() {
 		}
 
 		ofSetColor(textColor);
-		fontRef->drawString(text, horizontalPadding, lineHeight + verticalPadding + capsVerticalOffset);
+		
+
+
+		if (isMultiline()) {
+			drawCursor = false;
+			int lastCharIndex = 0;
+			int currentRow = 0;
+			float rowHeight = 100;
+			float maxWidth = getBounds().width-180;
+
+
+
+
+			for (int i = 0; i < text.size(); i++) {
+				float currentWidth = fontRef->stringWidth(text.substr(lastCharIndex, i - lastCharIndex));
+				if (currentWidth > maxWidth) {
+					i -= 1;
+					int numChars = i - lastCharIndex;
+					for (int k = i; k > lastCharIndex; k--) {
+						if (text.substr(k, 1) == " ") {
+							numChars = k - lastCharIndex;
+							break;
+						}
+					}
+					fontRef->drawString(text.substr(lastCharIndex, numChars), horizontalPadding, lineHeight + currentRow*rowHeight + verticalPadding + capsVerticalOffset);
+					lastCharIndex += numChars;
+					currentRow++;
+					if (text.substr(lastCharIndex, 1) == " ") {
+						lastCharIndex++;
+					}
+				}
+			}
+			fontRef->drawString(text.substr(lastCharIndex, text.size()), horizontalPadding, lineHeight + currentRow*rowHeight + verticalPadding + capsVerticalOffset);
+
+
+
+
+		} else {
+			fontRef->drawString(text, horizontalPadding, lineHeight + verticalPadding + capsVerticalOffset);
+		}
+
+
+
+
+
+
+
+
 	}
 	ofPopMatrix();
 }
