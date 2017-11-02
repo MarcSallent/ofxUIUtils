@@ -7,7 +7,8 @@
 enum UI_Button_Style {
 	UI_BUTTON_RECT,
 	UI_BUTTON_ROUNDED_RECT,
-	UI_BUTTON_ELLIPSE
+	UI_BUTTON_ELLIPSE,
+	UI_BUTTON_NONE
 };
 
 class ofxUIButton {

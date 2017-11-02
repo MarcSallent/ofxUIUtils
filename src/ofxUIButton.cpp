@@ -62,6 +62,8 @@ void ofxUIButton::draw(){
 		case UI_BUTTON_ELLIPSE:
 			ofEllipse(_x, _y, _w, _h);
 			break;
+		case UI_BUTTON_NONE:
+			break;
 		default:
 			ofRect(_x, _y, _w, _h);
 			break;
