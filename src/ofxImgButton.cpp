@@ -8,10 +8,14 @@ ofxImgButton::ofxImgButton() {
 	ID = 0;
 	togglable = false;
 	dist = 0;
+	wasPressed = false;
+	draggable = false;
+	buttonImgPath = "";
 }
 
 ofxImgButton::~ofxImgButton() {
 	//
+	ofUnregisterMouseEvents(this, OF_EVENT_ORDER_BEFORE_APP);
 }
 
 void ofxImgButton::setup(string imageName, float width, float height) {
@@ -22,6 +26,9 @@ void ofxImgButton::setup(string imageName, float width, float height) {
 	button.height = (height > 0) ? height : buttonImg.getHeight();
 	togglable = false;
 	toggle = false;
+	wasPressed = false;
+	draggable = false;
+	buttonImgPath = imageName;
 
 	ofRegisterMouseEvents(this, OF_EVENT_ORDER_BEFORE_APP);
 }
@@ -36,6 +43,9 @@ void ofxImgButton::setup(string imgName, string imgToggleName, float width, floa
 	button.height = (height > 0) ? height : buttonImg.getHeight();
 	togglable = true;
 	toggle = false;
+	wasPressed = false;
+	draggable = false;
+	buttonImgPath = imgName;
 
 
 
@@ -82,22 +92,35 @@ void ofxImgButton::draw() {
 */
 
 void ofxImgButton::mouseReleased(ofMouseEventArgs & args) {
-	if (clickable && args.button == 0) {
-		if (button.inside(args.x, args.y)) {
-			if (togglable) {
-				toggle = !toggle;
-				pair<bool, int> temp(toggle, ID);
-				ofNotifyEvent(imgButtonEvent, temp, this);
-			}
-			else {
-				pair<bool, int> temp(false, ID);
-				ofNotifyEvent(imgButtonEvent, temp, this);
+	if (ID>5000 || ID < 0) {
+		string noti = "rel";
+		ofLogError(noti) << ID;
+		return;
+	}
+	if (wasPressed) {
+		if (clickable && args.button == 0) {
+			if (button.inside(args.x, args.y)) {
+				/*if (togglable) {
+					toggle = !toggle;
+					pair<bool, int> temp(toggle, ID);
+					ofNotifyEvent(imgButtonEvent, temp, this);
+				}
+				else {*/
+					pair<bool, int> temp(false, ID);
+					ofNotifyEvent(imgButtonEvent, temp, this);
+				//}
 			}
 		}
 	}
+	wasPressed = false;
 }
 
 void ofxImgButton::mouseMoved(ofMouseEventArgs & args) {
+	if (ID>5000 || ID < 0) {
+		string noti = "mov";
+		ofLogError(noti) << ID;
+		return;
+	}
 	if (clickable) {
 		if (button.inside(args.x, args.y)) {
 			hovering = true;
@@ -106,11 +129,20 @@ void ofxImgButton::mouseMoved(ofMouseEventArgs & args) {
 			hovering = false;
 		}
 	}
+	//if (draggable && wasPressed) {
+	//	setPosition(args.x, args.y);
+	//}
 }
 
 void ofxImgButton::mousePressed(ofMouseEventArgs & args) {
+	if (ID>5000 || ID < 0) {
+		string noti = "pre";
+		ofLogError(noti) << ID;
+		return;
+	}
 	if (clickable && args.button == 0 && !togglable && button.inside(args.x, args.y)) {
 		pair<bool, int> temp(true, ID);
+		wasPressed = true;
 		ofNotifyEvent(imgButtonEvent, temp, this);
 	}
 }

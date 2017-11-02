@@ -15,7 +15,8 @@ public:
 	void draw(ofPoint p);
 	void draw();
 
-	void setImage(string imageName) { buttonImg.loadImage(imageName); }
+	void setImage(string imageName) { buttonImg.loadImage(imageName); buttonImgPath = imageName; button.width = buttonImg.getWidth(); button.height = buttonImg.getHeight(); }
+	string getImagePath() { return buttonImgPath; }
 	void setToggleImage(string imageName){ buttonImgToggle.loadImage(imageName); }
 	void setWidth(int w) { button.width = w; }
 	void setHeight(int h) { button.height = h; }
@@ -26,6 +27,9 @@ public:
 		button.x = x;
 		button.y = y;
 	}
+	//void setDraggable(bool drags) {
+	//	draggable = drags;
+	//}
 	void setPosition(ofPoint p) { setPosition(p.x, p.y); }
 	void setToggle(bool state){ toggle = state; }
 	void setToggleMode(bool mode) { togglable = mode; }
@@ -46,6 +50,8 @@ public:
 
 	ofEvent<const pair<bool, int> > imgButtonEvent;
 
+
+
 private:
 
 	float dist;
@@ -54,7 +60,9 @@ private:
 	bool visible, hovering, togglable, toggle, clickable;
 	ofImage		buttonImg;
 	ofImage		buttonImgToggle;
+	string		buttonImgPath;
 
 	int			ID;
-
+	bool		wasPressed;
+	bool		draggable;
 };
