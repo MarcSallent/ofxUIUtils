@@ -146,7 +146,7 @@ void ofxTextInputField::draw() {
 
 	ofPushMatrix(); {
 		ofTranslate(bounds.x, bounds.y);
-		if (selecting) {
+		if (selecting && false) {
 			ofPushStyle(); {
 				vector<string> lines = ofSplitString(text, "\n");
 				int beginCursorX, beginCursorY;
