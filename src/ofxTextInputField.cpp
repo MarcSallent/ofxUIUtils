@@ -243,8 +243,15 @@ void ofxTextInputField::draw() {
 
 			for (int i = 0; i < text.size(); i++) {
 				float currentWidth = fontRef->stringWidth(text.substr(lastCharIndex, i - lastCharIndex));
-				if (currentWidth > maxWidth) {
-					i -= 1;
+				string lletraActual = "";
+				if (i < text.size() - 1) {
+					lletraActual = text.substr(i, 1);
+				}
+				if (currentWidth > maxWidth || text.at(i) == '\n') {
+					if (text.at(i) == '\n') {
+					} else {
+						i -= 1;
+					}
 					int numChars = i - lastCharIndex;
 					for (int k = i; k > lastCharIndex; k--) {
 						if (text.substr(k, 1) == " ") {
@@ -422,7 +429,6 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs & a)
 		}
 		text.insert(text.begin() + cursorPosition, '\n');
 		cursorPosition++;
-
 
 		ofNotifyEvent(textChanged, text, this);
 		return;
