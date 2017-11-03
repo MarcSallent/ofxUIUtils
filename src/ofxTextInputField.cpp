@@ -236,7 +236,7 @@ void ofxTextInputField::draw() {
 			int lastCharIndex = 0;
 			int currentRow = 0;
 			float rowHeight = 100;
-			float maxWidth = getBounds().width-180;
+			float maxWidth = getBounds().width-210;
 
 
 
@@ -256,6 +256,9 @@ void ofxTextInputField::draw() {
 					for (int k = i; k > lastCharIndex; k--) {
 						if (text.substr(k, 1) == " ") {
 							numChars = k - lastCharIndex;
+							break;
+						} else if (text.at(i) == '\n') {
+							numChars = k - lastCharIndex +1;
 							break;
 						}
 					}
