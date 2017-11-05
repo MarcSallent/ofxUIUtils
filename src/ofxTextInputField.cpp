@@ -425,6 +425,10 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs & a)
 	}
 
 
+	if (a.key == OF_KEY_TAB) {
+		return;
+	}
+
 	if (a.key == OF_KEY_RETURN) {
 		if (!multiline) {
 			endEditing();
